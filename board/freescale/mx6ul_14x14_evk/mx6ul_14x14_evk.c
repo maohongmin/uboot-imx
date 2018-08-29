@@ -826,19 +826,43 @@ struct display_info_t const displays[] = {{
 	.enable	= do_enable_parallel_lcd,
 	.mode	= {
 		.name			= "TFT43AB",
-		.xres           = 480,
-		.yres           = 272,
-		.pixclock       = 108695,
-		.left_margin    = 8,
-		.right_margin   = 4,
-		.upper_margin   = 2,
-		.lower_margin   = 4,
-		.hsync_len      = 41,
-		.vsync_len      = 10,
+		.xres           = 800,
+		.yres           = 480,
+		.pixclock       = 29850,
+		.left_margin    = 121,
+		.right_margin   = 88,
+		.upper_margin   = 39,
+		.lower_margin   = 21,
+		.hsync_len      = 48,
+		.vsync_len      = 3,
 		.sync           = 0,
 		.vmode          = FB_VMODE_NONINTERLACED
 } } };
 size_t display_count = ARRAY_SIZE(displays);
+#endif
+
+#ifdef CONFIG_SPLASH_SCREEN
+#include <splash.h>
+
+static struct splash_location mx6ul_splash_locations[] = {
+	{
+		.name = "mmc_fs",
+		.storage = SPLASH_STORAGE_MMC,
+		.flags = SPLASH_STORAGE_FS,
+		.devpart = "0:1",
+	}
+};
+
+int splash_screen_prepare(void)
+{
+	if (mmc_get_env_dev() == 0) {
+		mx6ul_splash_locations[0].devpart = "0:1";
+	} else {
+		mx6ul_splash_locations[0].devpart = "1:1";
+	}
+	return splash_source_load(mx6ul_splash_locations,
+				  ARRAY_SIZE(mx6ul_splash_locations));
+}
 #endif
 
 int board_early_init_f(void)

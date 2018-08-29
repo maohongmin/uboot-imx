@@ -125,6 +125,9 @@
 	"optargs=\0" \
 	"cmdline=\0" \
 	"panel=TFT43AB\0" \
+	"splashimage=0x80000000\0" \
+	"splashsource=mmc_fs\0" \
+	"splashfile=/boot/logo.bmp\0" \
 	"mmcdev="__stringify(CONFIG_SYS_MMC_ENV_DEV)"\0" \
 	"mmcpart=" __stringify(CONFIG_SYS_MMC_IMG_LOAD_PART) "\0" \
 	"mmcroot=" CONFIG_MMCROOT " rootwait rw\0" \
@@ -427,6 +430,7 @@
 #define CONFIG_VIDEO_MXS
 #define CONFIG_VIDEO_LOGO
 #define CONFIG_SPLASH_SCREEN
+#define CONFIG_SPLASH_SOURCE
 #define CONFIG_SPLASH_SCREEN_ALIGN
 #define CONFIG_CMD_BMP
 #define CONFIG_BMP_16BPP
